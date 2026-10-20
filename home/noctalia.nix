@@ -20,6 +20,8 @@ in
 
       shell = {
         font_family = "Inter";
+        # Start typing in niri's overview (Super tap) to open the launcher.
+        niri_overview_type_to_launch_enabled = true;
         window_switcher.current_workspace_only = true;
       };
 

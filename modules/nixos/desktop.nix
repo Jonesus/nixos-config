@@ -39,6 +39,20 @@
     };
   };
 
+  # Tap Super on its own (< 200 ms, no other key) to send Super+O, which
+  # toggles niri's overview; holding Super works as usual. niri can't bind a
+  # lone modifier tap. Applies to every keyboard, the Corne included.
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        global.overload_tap_timeout = 200;
+        main.leftmeta = "overload(meta, M-o)";
+      };
+    };
+  };
+
   # Drives, trash, MTP and network locations in Nautilus (with udisks2).
   services.gvfs.enable = true;
 
