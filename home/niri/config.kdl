@@ -124,8 +124,12 @@ window-rule {
 }
 
 binds {
-    // Super+? on the fi layout (? is Shift+Plus; niri matches the unshifted key).
+    // Hotkey overlay. Super+M is the easy one on the Corne (no layers);
+    // Super+? is for the laptop keyboard (on the fi layout ? is Shift+Plus,
+    // and niri matches the unshifted key); Super+F1 is Raise+Q on the Corne.
+    Mod+M { show-hotkey-overlay; }
     Mod+Shift+Plus { show-hotkey-overlay; }
+    Mod+F1 { show-hotkey-overlay; }
 
     // Apps
     Mod+Return hotkey-overlay-title="Terminal" { spawn "ghostty"; }
