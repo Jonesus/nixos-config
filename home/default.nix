@@ -44,6 +44,20 @@
     "org/gnome/nautilus/list-view".default-zoom-level = "small";
   };
 
+  # Automount USB drives (via udisks2) and open them in Nautilus.
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "never";
+    settings.program_options = {
+      file_manager = "nautilus";
+      event_hook = "${pkgs.writeShellScript "udiskie-open" ''
+        [ "$1" = device_mounted ] && [ -n "$2" ] && exec nautilus --new-window "$2"
+      ''} {event} {mount_path}";
+    };
+  };
+
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
