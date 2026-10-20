@@ -52,6 +52,7 @@
     bibata-cursors
     adwaita-icon-theme
     nautilus
+    seahorse # GUI for gnome-keyring (and GPG/SSH keys)
     brightnessctl
     playerctl
   ];
@@ -62,6 +63,7 @@
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
+    hack-font # VS Code editor font
   ];
   fonts.fontconfig.defaultFonts = {
     sansSerif = [ "Inter" ];

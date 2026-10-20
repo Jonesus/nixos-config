@@ -25,6 +25,7 @@
     zip
     file
     tree
+    uv
   ];
 
   home.pointerCursor = {
