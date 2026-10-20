@@ -23,6 +23,7 @@ in
 
       bar.default = {
         smart_auto_hide = true;
+        show_on_workspace_switch = false; # no peek on switch; still shown on empty workspaces
         reserve_space = false;
         margin_ends = 6;
         border_width = 1;
