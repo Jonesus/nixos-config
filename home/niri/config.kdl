@@ -124,7 +124,8 @@ window-rule {
 }
 
 binds {
-    Mod+Shift+Slash { show-hotkey-overlay; }
+    // Super+? on the fi layout (? is Shift+Plus; niri matches the unshifted key).
+    Mod+Shift+Plus { show-hotkey-overlay; }
 
     // Apps
     Mod+Return hotkey-overlay-title="Terminal" { spawn "ghostty"; }
