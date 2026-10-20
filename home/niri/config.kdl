@@ -98,8 +98,10 @@ window-rule {
 window-rule {
     match app-id="^firefox$"
     match app-id="^code$"
+    match app-id=r#"^org\.telegram\.desktop$"#
     exclude title="^Picture-in-Picture$"
     exclude title=r#"^Extension: \(Bitwarden"#
+    exclude title="^Media viewer$"
     open-maximized true
 }
 
