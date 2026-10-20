@@ -16,6 +16,11 @@
       "flakes"
     ];
     auto-optimise-store = true;
+    # Prebuilt noctalia (the flake input tracks its `cachix` branch).
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
     trusted-users = [
       "root"
       user
