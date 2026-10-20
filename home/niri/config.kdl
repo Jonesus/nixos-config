@@ -8,6 +8,8 @@ input {
             options "caps:escape"
         }
         numlock
+        repeat-delay 200
+        repeat-rate 60
     }
 
     touchpad {
@@ -19,9 +21,16 @@ input {
     focus-follows-mouse max-scroll-amount="0%"
 }
 
-// Laptop panel. Run `niri msg outputs` to see names/modes of external screens.
+// Run `niri msg outputs` to see names/modes of screens.
+// External monitor sits left of the laptop panel, bottom edges aligned
+// (laptop is 1536x960 logical at 1.25 scale, Samsung is 2560x1440).
+output "Samsung Electric Company LS27D60xU HK2YA00266" {
+    position x=0 y=0
+}
+
 output "eDP-1" {
     scale 1.25
+    position x=2560 y=480
 }
 
 layout {
@@ -187,6 +196,7 @@ binds {
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
+    Mod+Shift+S hotkey-overlay-title="Screenshot area" { screenshot; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+E { quit; }

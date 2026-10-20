@@ -35,6 +35,10 @@
     gtk.enable = true;
   };
 
+  # GTK apps (and Firefox's own pages) read the UI font from here; unset, they
+  # fall back to Cantarell, which isn't installed.
+  dconf.settings."org/gnome/desktop/interface".font-name = "Inter 11";
+
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

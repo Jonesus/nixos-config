@@ -67,4 +67,15 @@
     sansSerif = [ "Inter" ];
     monospace = [ "JetBrainsMono Nerd Font" ];
   };
+  # Uninstalled UI fonts otherwise fuzzy-match "Noto Sans Arabic UI" (odd
+  # metrics for Latin text). Cantarell is GTK's default font, which Firefox
+  # uses for its own pages; Segoe UI is common in website font stacks.
+  fonts.fontconfig.localConf = ''
+    <?xml version="1.0"?>
+    <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+    <fontconfig>
+      <alias binding="same"><family>Cantarell</family><prefer><family>Inter</family></prefer></alias>
+      <alias binding="same"><family>Segoe UI</family><prefer><family>Inter</family></prefer></alias>
+    </fontconfig>
+  '';
 }

@@ -38,10 +38,12 @@
     pinentry.package = pkgs.pinentry-gnome3;
   };
 
-  # Restore ~/.ssh from the backup stick as well.
+  # Restore ~/.ssh from the backup stick as well. Host entries live in the
+  # unmanaged ~/.ssh/config.local so internal hosts stay out of this public repo.
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
+    includes = [ "config.local" ];
     settings."*".AddKeysToAgent = "yes";
   };
   services.ssh-agent.enable = true;
