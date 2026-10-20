@@ -15,6 +15,9 @@
       # The template's hook only edits this file if this line is missing, which
       # it can't do since home-manager makes the file read-only.
       theme = "noctalia";
+      # Brighten text colours that are too dark against the background (WCAG
+      # AA = 4.5). Palettes like Sway Classic have red at ~1.7:1 on #222222.
+      minimum-contrast = 4.5;
     };
   };
 }
