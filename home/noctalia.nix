@@ -6,6 +6,8 @@ in
   imports = [ inputs.noctalia.homeModules.default ];
 
   home.file."Pictures/Wallpapers/aperture-vintage.jpg".source = ./wallpapers/aperture-vintage.jpg;
+  xdg.configFile."noctalia/palettes/Sway Classic Readable.json".source =
+    ./noctalia/. + "/Sway Classic Readable.json";
 
   # niri starts noctalia (spawn-at-startup in home/niri/config.kdl), so no
   # systemd service. Anything not set here can be changed in the settings UI
@@ -50,9 +52,11 @@ in
         default.path = "${wallpaperDir}/aperture-vintage.jpg";
       };
 
+      # Sway Classic with its too-dark error/ANSI colours lightened to >= 4.5:1
+      # on #222222 (the original red is 1.7:1). Also feeds Ghostty's colours.
       theme = {
-        source = "community";
-        community_palette = "Sway Classic";
+        source = "custom";
+        custom_palette = "Sway Classic Readable";
         templates = {
           enable_builtin_templates = true;
           builtin_ids = [
