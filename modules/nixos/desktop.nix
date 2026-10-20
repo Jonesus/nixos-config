@@ -39,6 +39,9 @@
     };
   };
 
+  # Drives, trash, MTP and network locations in Nautilus (with udisks2).
+  services.gvfs.enable = true;
+
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true; # secret service for chrome/vscode
   security.pam.services.greetd.enableGnomeKeyring = true;

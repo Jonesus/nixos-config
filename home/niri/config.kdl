@@ -26,6 +26,10 @@ input {
 // (laptop is 1536x960 logical at 1.25 scale, Samsung is 2560x1440).
 output "Samsung Electric Company LS27D60xU HK2YA00266" {
     position x=0 y=0
+    // Wide screen: new windows default to a third (half on the laptop).
+    layout {
+        default-column-width { proportion 0.33333; }
+    }
 }
 
 output "eDP-1" {
@@ -142,8 +146,8 @@ binds {
     Mod+O repeat=false { toggle-overview; }
 
     Mod+H { focus-column-left; }
-    Mod+J { focus-window-down; }
-    Mod+K { focus-window-up; }
+    Mod+J { focus-workspace-down; }
+    Mod+K { focus-workspace-up; }
     Mod+L { focus-column-right; }
     Mod+Left { focus-column-left; }
     Mod+Down { focus-window-down; }
