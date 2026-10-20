@@ -25,6 +25,8 @@ in
         smart_auto_hide = true;
         reserve_space = false;
         margin_ends = 6;
+        border_width = 1;
+        widget_spacing = 16;
       };
 
       widget.network.show_label = false;
@@ -38,6 +40,7 @@ in
         device = {
           "MX Vertical".warning_threshold = 10;
           "Corne".warning_threshold = 10;
+          "WF-1000XM5".warning_threshold = 10;
         };
       };
 

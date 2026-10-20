@@ -51,8 +51,12 @@ layout {
     focus-ring {
         width 2
     }
+    // Thin outline on every window, matching the bar's border (Sway Classic's
+    // outline colour); the focus ring above still marks the focused one.
     border {
-        off
+        width 1
+        active-color "#484e50"
+        inactive-color "#484e50"
     }
 }
 
