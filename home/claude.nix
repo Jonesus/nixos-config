@@ -1,4 +1,14 @@
-{ ... }:
+{ pkgs, ... }:
+let
+  # Desktop notification from a hook's JSON on stdin (via noctalia's daemon).
+  notify = pkgs.writeShellScript "claude-notify" ''
+    input=$(cat)
+    title=$(${pkgs.jq}/bin/jq -r '.title // "Claude Code"' <<<"$input")
+    msg=$(${pkgs.jq}/bin/jq -r '.message // "Claude has a question for you"' <<<"$input")
+    dir=$(basename "$(${pkgs.jq}/bin/jq -r '.cwd // ""' <<<"$input")")
+    ${pkgs.libnotify}/bin/notify-send -a "Claude Code" "$title" "''${dir:+$dir: }$msg"
+  '';
+in
 {
   programs.claude-code = {
     enable = true;
@@ -11,6 +21,37 @@
       skipAutoPermissionPrompt = true;
       agentPushNotifEnabled = true;
       theme = "dark";
+
+      # Only notify when something is actually waiting on me. The built-in
+      # alert also fires ~60s after every finished turn ("idle_prompt"), so
+      # it's off and the hooks below cover the cases that need an answer.
+      preferredNotifChannel = "notifications_disabled";
+      hooks = {
+        Notification = [
+          {
+            matcher = "permission_prompt|elicitation_dialog|elicitation_url_dialog|agent_needs_input";
+            hooks = [
+              {
+                type = "command";
+                command = "${notify}";
+              }
+            ];
+          }
+        ];
+        # Questions (AskUserQuestion) aren't documented as a notification
+        # type, so alert when one is asked.
+        PreToolUse = [
+          {
+            matcher = "AskUserQuestion";
+            hooks = [
+              {
+                type = "command";
+                command = "${notify}";
+              }
+            ];
+          }
+        ];
+      };
     };
     context = ''
       # Machine context
