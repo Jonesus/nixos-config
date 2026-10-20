@@ -8,6 +8,9 @@
     profiles.default.extensions = with pkgs.vscode-extensions; [
       jnoortheen.nix-ide
       mkhl.direnv
+      ms-vscode-remote.remote-ssh
+      ms-vscode-remote.remote-ssh-edit
+      ms-vscode-remote.remote-containers
     ];
   };
 }

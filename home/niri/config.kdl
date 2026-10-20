@@ -92,6 +92,22 @@ window-rule {
 }
 
 window-rule {
+    match app-id="^firefox$"
+    match app-id="^code$"
+    exclude title="^Picture-in-Picture$"
+    exclude title=r#"^Extension: \(Bitwarden"#
+    open-maximized true
+}
+
+// Bitwarden's popout window: small floating panel instead of a full column.
+window-rule {
+    match app-id="^firefox$" title=r#"^Extension: \(Bitwarden"#
+    open-floating true
+    default-column-width { fixed 420; }
+    default-window-height { fixed 640; }
+}
+
+window-rule {
     match app-id="firefox$" title="^Picture-in-Picture$"
     open-floating true
 }
@@ -168,6 +184,13 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
+    // Left-hand workspace switching (for the Corne, where the number row is a layer away)
+    Mod+Ctrl+Q { focus-workspace 1; }
+    Mod+Ctrl+W { focus-workspace 2; }
+    Mod+Ctrl+E { focus-workspace 3; }
+    Mod+Ctrl+R { focus-workspace 4; }
+    Mod+Ctrl+T { focus-workspace 5; }
+
     Mod+Shift+1 { move-column-to-workspace 1; }
     Mod+Shift+2 { move-column-to-workspace 2; }
     Mod+Shift+3 { move-column-to-workspace 3; }
