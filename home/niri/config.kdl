@@ -1,0 +1,194 @@
+// niri config. Live-reloaded on save; check with `niri validate`.
+// Reference: https://yalter.github.io/niri/Configuration:-Introduction
+
+input {
+    keyboard {
+        xkb {
+            layout "fi"
+            options "caps:escape"
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        dwt
+    }
+
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// Laptop panel. Run `niri msg outputs` to see names/modes of external screens.
+output "eDP-1" {
+    scale 1.25
+}
+
+layout {
+    gaps 12
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 2
+    }
+    border {
+        off
+    }
+}
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+// --- noctalia (https://docs.noctalia.dev/noctalia/compositor-settings/niri/) ---
+spawn-at-startup "noctalia"
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+
+// Blurred, tinted wallpaper behind the overview (needs [niri/backdrop] in noctalia).
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+
+debug {
+    // Lets noctalia notifications activate/focus windows.
+    honor-xdg-activation-with-invalid-serial
+}
+
+// --- apps ---
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    block-out-from "screen-capture"
+}
+
+window-rule {
+    match app-id="firefox$" title="^Picture-in-Picture$"
+    open-floating true
+}
+
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // Apps
+    Mod+Return hotkey-overlay-title="Terminal" { spawn "ghostty"; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "firefox"; }
+    Mod+E hotkey-overlay-title="Files" { spawn "nautilus"; }
+
+    // Noctalia
+    Mod+Space hotkey-overlay-title="Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+S hotkey-overlay-title="Control center" { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Comma hotkey-overlay-title="Noctalia settings" { spawn-sh "noctalia msg settings-toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock" { spawn-sh "noctalia msg session lock"; }
+    Alt+Tab { spawn-sh "noctalia msg window-switcher hold"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn-sh "noctalia msg volume-mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+
+    // Windows
+    Mod+Q repeat=false { close-window; }
+    Mod+O repeat=false { toggle-overview; }
+
+    Mod+H { focus-column-left; }
+    Mod+J { focus-window-down; }
+    Mod+K { focus-window-up; }
+    Mod+L { focus-column-right; }
+    Mod+Left { focus-column-left; }
+    Mod+Down { focus-window-down; }
+    Mod+Up { focus-window-up; }
+    Mod+Right { focus-column-right; }
+
+    Mod+Shift+H { move-column-left; }
+    Mod+Shift+J { move-window-down; }
+    Mod+Shift+K { move-window-up; }
+    Mod+Shift+L { move-column-right; }
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Down { move-window-down; }
+    Mod+Shift+Up { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+
+    Mod+Home { focus-column-first; }
+    Mod+End { focus-column-last; }
+
+    Mod+Ctrl+H { focus-monitor-left; }
+    Mod+Ctrl+L { focus-monitor-right; }
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+
+    // Workspaces
+    Mod+U { focus-workspace-down; }
+    Mod+I { focus-workspace-up; }
+    Mod+Shift+U { move-column-to-workspace-down; }
+    Mod+Shift+I { move-column-to-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    // Column layout (Ö/Ä instead of [ ], which need AltGr on the fi layout)
+    Mod+Odiaeresis { consume-or-expel-window-left; }
+    Mod+Adiaeresis { consume-or-expel-window-right; }
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { reset-window-height; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+C { center-column; }
+    Mod+W { toggle-column-tabbed-display; }
+    Mod+V { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Plus { set-column-width "+10%"; }
+
+    // Screenshots
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Shift+E { quit; }
+    Mod+Shift+P { power-off-monitors; }
+}
