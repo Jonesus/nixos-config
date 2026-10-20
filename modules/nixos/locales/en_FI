@@ -1,0 +1,87 @@
+comment_char %
+escape_char /
+
+% English names with Finnish date/time conventions: dd.mm.yyyy, 24h,
+% Monday first. Only LC_TIME is used (see base.nix); the rest is en_IE.
+
+LC_IDENTIFICATION
+title      "English locale for Finland"
+source     "nixos-config"
+address    ""
+contact    ""
+email      ""
+tel        ""
+fax        ""
+language   "English"
+territory  "Finland"
+revision   "1.0"
+date       "2026-10-20"
+
+category "i18n:2012";LC_IDENTIFICATION
+category "i18n:2012";LC_CTYPE
+category "i18n:2012";LC_COLLATE
+category "i18n:2012";LC_TIME
+category "i18n:2012";LC_NUMERIC
+category "i18n:2012";LC_MONETARY
+category "i18n:2012";LC_MESSAGES
+category "i18n:2012";LC_PAPER
+category "i18n:2012";LC_NAME
+category "i18n:2012";LC_ADDRESS
+category "i18n:2012";LC_TELEPHONE
+category "i18n:2012";LC_MEASUREMENT
+END LC_IDENTIFICATION
+
+LC_CTYPE
+copy "en_IE"
+END LC_CTYPE
+
+LC_COLLATE
+copy "en_IE"
+END LC_COLLATE
+
+LC_TIME
+abday       "Sun";"Mon";"Tue";"Wed";"Thu";"Fri";"Sat"
+day         "Sunday";"Monday";"Tuesday";"Wednesday";"Thursday";"Friday";"Saturday"
+abmon       "Jan";"Feb";"Mar";"Apr";"May";"Jun";"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"
+mon         "January";"February";"March";"April";"May";"June";"July";"August";"September";"October";"November";"December"
+d_t_fmt     "%a %d.%m.%Y %H:%M:%S"
+date_fmt    "%a %d.%m.%Y %H:%M:%S %Z"
+d_fmt       "%d.%m.%Y"
+t_fmt       "%H:%M:%S"
+am_pm       "";""
+t_fmt_ampm  ""
+week        7;19971130;4
+first_weekday 2
+END LC_TIME
+
+LC_NUMERIC
+copy "en_IE"
+END LC_NUMERIC
+
+LC_MONETARY
+copy "en_IE"
+END LC_MONETARY
+
+LC_MESSAGES
+copy "en_IE"
+END LC_MESSAGES
+
+LC_PAPER
+copy "en_IE"
+END LC_PAPER
+
+LC_NAME
+copy "en_IE"
+END LC_NAME
+
+LC_ADDRESS
+copy "en_IE"
+END LC_ADDRESS
+
+LC_TELEPHONE
+copy "en_IE"
+END LC_TELEPHONE
+
+LC_MEASUREMENT
+copy "en_IE"
+END LC_MEASUREMENT

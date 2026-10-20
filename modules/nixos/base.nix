@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ config, pkgs, user, ... }:
 {
   # --- boot ---
   boot.loader.systemd-boot = {
@@ -43,7 +43,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_NUMERIC = "fi_FI.UTF-8";
-    LC_TIME = "fi_FI.UTF-8";
+    # English day/month names, Finnish formats (20.10.2026, 16:15). Custom
+    # locale; ICU (Firefox, Chrome) knows en_FI too, with the same formats.
+    LC_TIME = "en_FI.UTF-8";
     LC_MONETARY = "fi_FI.UTF-8";
     LC_PAPER = "fi_FI.UTF-8";
     LC_NAME = "fi_FI.UTF-8";
@@ -52,6 +54,18 @@
     LC_MEASUREMENT = "fi_FI.UTF-8";
     LC_IDENTIFICATION = "fi_FI.UTF-8";
   };
+  # glibc has no en_FI; add ./locales/en_FI to the locale build.
+  i18n.glibcLocales =
+    (pkgs.glibcLocales.override {
+      allLocales = false;
+      locales = config.i18n.supportedLocales;
+    }).overrideAttrs
+      (old: {
+        postPatch = (old.postPatch or "") + ''
+          cp ${./locales/en_FI} localedata/locales/en_FI
+          echo 'en_FI.UTF-8/UTF-8 \' >> localedata/SUPPORTED
+        '';
+      });
   console.keyMap = "fi";
   services.xserver.xkb = {
     layout = "fi";
