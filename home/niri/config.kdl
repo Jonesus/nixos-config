@@ -142,6 +142,9 @@ binds {
     Mod+Comma hotkey-overlay-title="Noctalia settings" { spawn-sh "noctalia msg settings-toggle"; }
     Mod+Alt+L hotkey-overlay-title="Lock" { spawn-sh "noctalia msg session lock"; }
     Alt+Tab { spawn-sh "noctalia msg window-switcher hold"; }
+    // Corne alternatives: Alt only exists as a hold-tap on its Lower layer.
+    Mod+Shift+Escape hotkey-overlay-title="Lock" { spawn-sh "noctalia msg session lock"; }
+    Mod+Tab { spawn-sh "noctalia msg window-switcher hold"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
@@ -236,12 +239,16 @@ binds {
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Mod+Minus { set-column-width "-10%"; }
     Mod+Plus { set-column-width "+10%"; }
+    Mod+Period { set-column-width "+10%"; } // + is on the Corne's Lower layer
 
     // Screenshots
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
     Mod+Shift+S hotkey-overlay-title="Screenshot area" { screenshot; }
+    // The Corne has no Print key.
+    Mod+Ctrl+S hotkey-overlay-title="Screenshot screen" { screenshot-screen; }
+    Mod+Ctrl+Shift+S hotkey-overlay-title="Screenshot window" { screenshot-window; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+E { quit; }
