@@ -10,6 +10,7 @@
       tui = "fullscreen";
       skipAutoPermissionPrompt = true;
       agentPushNotifEnabled = true;
+      theme = "dark";
     };
     context = ''
       # Machine context
