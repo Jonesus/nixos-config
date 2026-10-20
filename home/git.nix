@@ -1,8 +1,13 @@
 { pkgs, ... }:
 {
+  # VS Code Dev Containers copy ~/.config/git/config into containers, which
+  # have no /nix/store. So everything here refers to programs by bare name
+  # (on PATH both here and in a typical container) rather than HM's
+  # lfs.enable / difftastic.git.enable, which write /nix/store paths.
+  home.packages = [ pkgs.git-lfs ];
+
   programs.git = {
     enable = true;
-    lfs.enable = true;
     signing = {
       key = "040E3EDC6AF623CE";
       signByDefault = true;
@@ -17,6 +22,14 @@
       init.defaultBranch = "main";
       pull.rebase = true;
       remote.origin.tagopt = "--tags";
+      filter.lfs = {
+        clean = "git-lfs clean -- %f";
+        smudge = "git-lfs smudge -- %f";
+        process = "git-lfs filter-process";
+        required = true;
+      };
+      # Plain `git diff` stays built-in so it works in containers without
+      # difftastic; `git dft` runs difftastic.
       alias.dft = "difftool";
       diff.tool = "difftastic";
       difftool.prompt = false;
@@ -25,11 +38,7 @@
     };
   };
 
-  programs.difftastic = {
-    enable = true;
-    git.enable = true;
-    options.display = "inline";
-  };
+  programs.difftastic.enable = true;
 
   # Restore ~/.gnupg from the backup stick; keys are not managed here.
   programs.gpg.enable = true;
