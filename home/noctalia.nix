@@ -38,6 +38,12 @@ in
 
       location.auto_locate = true;
 
+      # Default picks one of 11 transitions at random; keep a short cross-fade.
+      lockscreen = {
+        transition = [ "fade" ];
+        transition_duration = 400;
+      };
+
       # The top-level threshold only applies to the laptop battery; peripherals
       # need a per-device entry (selector matches upower model/serial/path).
       battery = {
