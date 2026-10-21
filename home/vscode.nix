@@ -11,6 +11,7 @@
       ms-vscode-remote.remote-ssh
       ms-vscode-remote.remote-ssh-edit
       ms-vscode-remote.remote-containers
+      vscodevim.vim
     ];
   };
 }
