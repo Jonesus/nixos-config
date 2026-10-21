@@ -18,6 +18,7 @@
     telegram-desktop
     spotify
     keepassxc
+    onlyoffice-desktopeditors
   ];
 
   # Run unpatched binaries (VS Code extensions' language servers, prebuilt CLIs).

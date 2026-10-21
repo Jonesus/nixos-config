@@ -81,6 +81,8 @@
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
     hack-font # VS Code editor font
+    corefonts # Arial, Times New Roman, Verdana, ... (MS Office compat)
+    vista-fonts # Calibri, Cambria, Consolas, ...
   ];
   fonts.fontconfig.defaultFonts = {
     sansSerif = [ "Inter" ];
