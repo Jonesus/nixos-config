@@ -45,6 +45,10 @@
   services.gpg-agent = {
     enable = true;
     pinentry.package = pkgs.pinentry-gnome3;
+    # S.gpg-agent.extra is what ~/.ssh/config.local RemoteForwards to remote
+    # hosts for commit signing; under systemd socket activation it only
+    # exists if enabled here.
+    enableExtraSocket = true;
   };
 
   # Restore ~/.ssh from the backup stick as well. Host entries live in the

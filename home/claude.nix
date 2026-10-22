@@ -60,6 +60,8 @@ in
       - Don't install software imperatively (no apt, no `nix-env -i`, no curl | sh). Add
         system packages in ~/nixos-config/modules/nixos/*.nix, user packages/dotfiles in
         ~/nixos-config/home/*.nix, then apply with `nh os switch`.
+      - You cannot run `nh os switch` yourself (it needs a sudo password). Don't try; ask
+        the user to run `! nh os switch ~/nixos-config` and continue once they have.
       - For one-off tools use `nix shell nixpkgs#<pkg>` / `nix run nixpkgs#<pkg>`; for project
         toolchains use a flake devShell + direnv (`use flake`).
       - niri config is ~/nixos-config/home/niri/config.kdl (live-reloaded; check with
