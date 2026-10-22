@@ -19,6 +19,7 @@
     # NetworkManager, Bluetooth, UPower, power-profiles-daemon.
     recommendedServices.enable = true;
   };
+  networking.networkmanager.plugins = [ pkgs.networkmanager-openvpn ];
 
   # greetd + noctalia-greeter. The shell can push its theme/wallpaper to the
   # greeter ("greeter sync"); allow that without a password prompt for us.
