@@ -37,6 +37,12 @@ output "eDP-1" {
     position x=2560 y=480
 }
 
+// 4K TV. It reports a huge physical size, so niri's automatic scale picks 1;
+// other 4K monitors get ~2 automatically and need no entry here.
+output "LG Electronics LG TV SSCR2 0x01010101" {
+    scale 2
+}
+
 layout {
     gaps 12
     center-focused-column "never"
