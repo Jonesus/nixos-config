@@ -1,4 +1,4 @@
-{ inputs, user, ... }:
+{ inputs, user, config, ... }:
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
@@ -6,7 +6,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit inputs user; };
+    extraSpecialArgs = {
+      inherit inputs user;
+      hostname = config.networking.hostName;
+    };
     users.${user} = import ../../home;
   };
 }

@@ -31,7 +31,13 @@
   };
 
   programs.fzf.enable = true;
-  programs.starship.enable = true;
+  programs.starship = {
+    enable = true;
+    # Show the Python version only in real projects (pyproject.toml,
+    # requirements.txt, .python-version, ...), not in any folder that merely
+    # holds a stray .py file, such as ~.
+    settings.python.detect_extensions = [ ];
+  };
 
   # Per-project toolchains: drop a flake.nix / .envrc with `use flake` into a
   # repo instead of installing nvm/pyenv globally.

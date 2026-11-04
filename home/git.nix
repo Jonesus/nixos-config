@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hostname, ... }:
 {
   # VS Code Dev Containers copy ~/.config/git/config into containers, which
   # have no /nix/store. So everything here refers to programs by bare name
@@ -9,7 +9,8 @@
   programs.git = {
     enable = true;
     signing = {
-      key = "040E3EDC6AF623CE";
+      # Each machine signs with its own key; the X13's isn't on the desktop.
+      key = if hostname == "desktop" then "75AA59CCA61B5264" else "040E3EDC6AF623CE";
       signByDefault = true;
     };
     settings = {

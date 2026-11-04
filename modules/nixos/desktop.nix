@@ -63,6 +63,9 @@
   programs.dconf.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # electron/chromium on wayland
+  # No input-method daemon runs, so GTK4's default "wayland" IM module drops
+  # dead keys (no ~ on the Finnish layout in Ghostty). Use GTK's own compose.
+  environment.sessionVariables.GTK_IM_MODULE = "simple";
 
   environment.systemPackages = with pkgs; [
     xwayland-satellite # niri spawns it automatically for X11 apps

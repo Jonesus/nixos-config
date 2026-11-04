@@ -1,0 +1,32 @@
+// x13 (ThinkPad X13 Gen 2a) — outputs and workspaces
+// Run `niri msg outputs` to see names/modes of screens.
+
+// External monitor sits left of the laptop panel, bottom edges aligned
+// (laptop is 1536x960 logical at 1.25 scale, Samsung is 2560x1440).
+output "Samsung Electric Company LS27D60xU HK2YA00266" {
+    position x=0 y=0
+    layout {
+        default-column-width { proportion 0.33333; }
+    }
+}
+
+output "eDP-1" {
+    scale 1.25
+    position x=2560 y=480
+}
+
+// Named workspaces always belong to their output: when the Samsung is
+// unplugged they move to the laptop, and on replug they (and their windows)
+// move back. Unnamed workspaces only do that if they were created there.
+workspace "dev" {
+    open-on-output "Samsung Electric Company LS27D60xU HK2YA00266"
+}
+workspace "dev2" {
+    open-on-output "Samsung Electric Company LS27D60xU HK2YA00266"
+}
+
+// 4K TV. It reports a huge physical size, so niri's automatic scale picks 1;
+// other 4K monitors get ~2 automatically and need no entry here.
+output "LG Electronics LG TV SSCR2 0x01010101" {
+    scale 2
+}

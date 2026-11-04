@@ -1,5 +1,5 @@
 {
-  description = "jones' NixOS: niri + noctalia on a ThinkPad X13 Gen 2a";
+  description = "jones' NixOS: niri + noctalia";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -36,6 +36,12 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs user; };
         modules = [ ./hosts/x13 ];
+      };
+
+      nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs user; };
+        modules = [ ./hosts/desktop ];
       };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;

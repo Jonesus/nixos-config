@@ -1,4 +1,10 @@
-{ config, inputs, ... }:
+{
+  config,
+  lib,
+  inputs,
+  hostname,
+  ...
+}:
 let
   wallpaperDir = "${config.home.homeDirectory}/Pictures/Wallpapers";
 in
@@ -32,9 +38,41 @@ in
         margin_ends = 6;
         border_width = 1;
         widget_spacing = 16;
+        # Default minus the wallpaper picker.
+        start = [
+          "launcher"
+          "workspaces"
+        ];
+      }
+      // lib.optionalAttrs (hostname == "desktop") {
+        # The ultrawide has width to spare: bar pinned to the left edge, always
+        # shown, with windows tiled beside it rather than under it.
+        monitor.ultrawide = {
+          match = "U4919DW";
+          position = "left";
+          auto_hide = false;
+          smart_auto_hide = false;
+          reserve_space = true;
+        };
       };
 
       widget.network.show_label = false;
+
+      # Firefox web apps (Zulip, ...) and Telegram play their own sound, and
+      # noctalia ignores the suppress-sound hint, so it would ding on top.
+      # Keep their toasts, drop noctalia's sound. Matches app-name substrings.
+      notification.filter = {
+        firefox = {
+          enabled = true;
+          match = "firefox";
+          play_sound = false;
+        };
+        telegram = {
+          enabled = true;
+          match = "telegram";
+          play_sound = false;
+        };
+      };
 
       location.auto_locate = true;
 

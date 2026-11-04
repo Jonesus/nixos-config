@@ -1,4 +1,5 @@
-// niri config. Live-reloaded on save; check with `niri validate`.
+// niri shared config — outputs and workspaces are in outputs-<host>.kdl,
+// concatenated by home/niri/default.nix. Check with `niri validate`.
 // Reference: https://yalter.github.io/niri/Configuration:-Introduction
 
 input {
@@ -12,6 +13,12 @@ input {
         repeat-rate 60
     }
 
+    // No pointer acceleration: movement follows the hand 1:1 at the default
+    // speed (accel-speed 0.0; range -1.0..1.0 if it needs tuning).
+    mouse {
+        accel-profile "flat"
+    }
+
     touchpad {
         tap
         natural-scroll
@@ -19,38 +26,6 @@ input {
     }
 
     focus-follows-mouse max-scroll-amount="0%"
-}
-
-// Run `niri msg outputs` to see names/modes of screens.
-// External monitor sits left of the laptop panel, bottom edges aligned
-// (laptop is 1536x960 logical at 1.25 scale, Samsung is 2560x1440).
-output "Samsung Electric Company LS27D60xU HK2YA00266" {
-    position x=0 y=0
-    // Wide screen: new windows default to a third (half on the laptop).
-    layout {
-        default-column-width { proportion 0.33333; }
-    }
-}
-
-output "eDP-1" {
-    scale 1.25
-    position x=2560 y=480
-}
-
-// Named workspaces always belong to their output: when the Samsung is
-// unplugged they move to the laptop, and on replug they (and their windows)
-// move back. Unnamed workspaces only do that if they were created there.
-workspace "dev" {
-    open-on-output "Samsung Electric Company LS27D60xU HK2YA00266"
-}
-workspace "dev2" {
-    open-on-output "Samsung Electric Company LS27D60xU HK2YA00266"
-}
-
-// 4K TV. It reports a huge physical size, so niri's automatic scale picks 1;
-// other 4K monitors get ~2 automatically and need no entry here.
-output "LG Electronics LG TV SSCR2 0x01010101" {
-    scale 2
 }
 
 layout {
@@ -81,6 +56,13 @@ screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 hotkey-overlay {
     skip-at-startup
+}
+
+// No hot corners: flicking the pointer into a corner kept opening the overview.
+gestures {
+    hot-corners {
+        off
+    }
 }
 
 // --- noctalia (https://docs.noctalia.dev/noctalia/compositor-settings/niri/) ---
@@ -256,6 +238,11 @@ binds {
     Mod+Minus { set-column-width "-10%"; }
     Mod+Plus { set-column-width "+10%"; }
     Mod+Period { set-column-width "+10%"; } // + is on the Corne's Lower layer
+    // Fine resize, held to repeat: 5% of the ultrawide is ~250 px.
+    Mod+Alt+Left { set-column-width "-5%"; }
+    Mod+Alt+Right { set-column-width "+5%"; }
+    Mod+Alt+Up { set-window-height "-5%"; }
+    Mod+Alt+Down { set-window-height "+5%"; }
 
     // Screenshots
     Print { screenshot; }

@@ -53,8 +53,14 @@
     tray = "never";
     settings.program_options = {
       file_manager = "nautilus";
+      # Only our own mounts: fwupd briefly mounts every EFI partition as root
+      # under /run/media/root, which would otherwise pop up "no permission"
+      # windows.
       event_hook = "${pkgs.writeShellScript "udiskie-open" ''
-        [ "$1" = device_mounted ] && [ -n "$2" ] && exec nautilus --new-window "$2"
+        [ "$1" = device_mounted ] || exit 0
+        case "$2" in
+          /run/media/"$USER"/*) exec nautilus --new-window "$2" ;;
+        esac
       ''} {event} {mount_path}";
     };
   };

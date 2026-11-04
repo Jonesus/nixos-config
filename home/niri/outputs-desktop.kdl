@@ -1,0 +1,49 @@
+// desktop (Ryzen 5 3600 + RTX 3060) — outputs and workspaces
+// Run `niri msg outputs` to see names/modes of screens.
+
+// Dell U4919DW 49" ultrawide. Its EDID advertises 3840x1080 as preferred, so
+// pin the native 5120x1440 mode, unscaled. New windows open at a third of
+// the width (the first Mod+R preset), three side by side.
+output "Dell Inc. Dell U4919DW 515XTY2" {
+    mode "5120x1440@59.977"
+    scale 1
+    layout {
+        default-column-width { proportion 0.33333; }
+    }
+}
+
+// The shared config opens these maximized; on the ultrawide that is far too
+// wide, so they get the default third like everything else (later rules
+// override earlier).
+window-rule {
+    match app-id="^firefox$"
+    match app-id="^code$"
+    match app-id=r#"^org\.telegram\.desktop$"#
+    match app-id="^spotify$"
+    open-maximized false
+}
+
+// Terminals are narrower: a quarter of the width.
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"#
+    default-column-width { proportion 0.25; }
+}
+
+// Games: float at the size the game asks for instead of being tiled to the
+// column width, which many games don't handle (stretched or offset clicks).
+// Proton games are steam_app_<id>; native ones need their own match (find it
+// with `niri msg pick-window`). Mod+V tiles one if wanted.
+window-rule {
+    match app-id=r#"^steam_app_"#
+    match app-id="^factorio$"
+    match app-id="^Slay the Spire 2$"
+    open-floating true
+    open-focused true
+}
+
+workspace "dev" {
+    open-on-output "Dell Inc. Dell U4919DW 515XTY2"
+}
+workspace "dev2" {
+    open-on-output "Dell Inc. Dell U4919DW 515XTY2"
+}
