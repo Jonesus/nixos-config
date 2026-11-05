@@ -26,6 +26,7 @@
     file
     tree
     uv
+    gnumake
     loupe
   ];
 
