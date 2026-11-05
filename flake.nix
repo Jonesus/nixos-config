@@ -44,6 +44,17 @@
         modules = [ ./hosts/desktop ];
       };
 
+      # Pass platforms / buildTools / ndk / cmake / emulators to vary it; see the file.
+      devShells.x86_64-linux.android = import ./devshells/android.nix {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config = {
+            allowUnfree = true;
+            android_sdk.accept_license = true;
+          };
+        };
+      };
+
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };
 }
