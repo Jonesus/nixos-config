@@ -58,6 +58,12 @@ in
 
       widget.network.show_label = false;
 
+      # Show workspace names (niri named workspaces like "dev") on the bar.
+      widget.workspaces = {
+        label_source = "name";
+        max_label_chars = 16;
+      };
+
       # Firefox web apps (Zulip, ...) and Telegram play their own sound, and
       # noctalia ignores the suppress-sound hint, so it would ding on top.
       # Keep their toasts, drop noctalia's sound. Matches app-name substrings.
