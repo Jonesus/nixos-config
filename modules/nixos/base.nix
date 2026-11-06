@@ -7,7 +7,6 @@
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.systemd.enable = true; # nicer LUKS prompt, needed for plymouth etc.
 
   # --- nix ---
   nix.settings = {
