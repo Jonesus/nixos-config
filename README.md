@@ -37,7 +37,9 @@ scripts/install.sh           wipe + install from the live ISO
 | What | How |
 |---|---|
 | Apply changes | `nh os switch` (or `sudo nixos-rebuild switch --flake ~/nixos-config#x13`) |
-| Update everything | `nix flake update && nh os switch` |
+| Update everything | merge the weekly "flake.lock: update inputs" PR, `git pull`, `nh os switch` |
+| Update now, 1-week cooldown | `scripts/update-flake-aged.sh && nh os switch` (versions ≥ 7 days old) |
+| Update to latest | `nix flake update && nh os switch` |
 | Roll back | pick an older generation in the boot menu, or `sudo nixos-rebuild switch --rollback` |
 | Try a package | `nix shell nixpkgs#<pkg>` |
 | Edit niri config | edit `home/niri/config.kdl`; niri reloads on save; `niri validate` |
