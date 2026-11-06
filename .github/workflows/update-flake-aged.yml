@@ -1,7 +1,7 @@
 # Weekly PR that updates flake.lock, but only to versions at least 7 days old
 # (see scripts/update-flake-aged.sh), after checking that every host still
 # builds with them. Review the PR, merge, then pull and `nh os switch` locally.
-name: Update flake inputs (7-day cooldown)
+name: Update flake inputs
 
 on:
   schedule:
@@ -77,8 +77,8 @@ jobs:
         with:
           branch: flake-update-aged
           delete-branch: true
-          commit-message: "flake.lock: update inputs (7-day cooldown)"
-          title: "${{ steps.verify.outcome == 'success' && 'flake.lock: update inputs (7-day cooldown)' || '[build failing] flake.lock: update inputs (7-day cooldown)' }}"
+          commit-message: "flake.lock: update inputs"
+          title: "${{ steps.verify.outcome == 'success' && 'flake.lock: update inputs' || '[build failing] flake.lock: update inputs' }}"
           body-path: ${{ runner.temp }}/summary.md
 
       - name: Fail the run if the update doesn't build
