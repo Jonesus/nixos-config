@@ -31,7 +31,7 @@ gh_api() {
 
 # Newest release of a nixos channel published before the cutoff, as "rev epoch".
 channel_rev() {
-  local url path name prefix token="" page best="" best_t=0 key t
+  local url path name prefix token="" page best="" best_t=0 key t rev
   url=$(curl -fsSI "https://channels.nixos.org/$1" | tr -d '\r' |
     awk 'tolower($1)=="location:"{print $2}')
   path=${url#https://releases.nixos.org/}
@@ -51,7 +51,10 @@ channel_rev() {
   # The current series may not reach back to the cutoff right after a
   # version bump; then leave nixpkgs where it is.
   [[ -n $best ]] || return 0
-  echo "$(curl -fsSL "https://releases.nixos.org/$best/git-revision") $best_t"
+  # Releases are picked by publish time, but report the commit's own time:
+  # that's what flake.lock's lastModified holds and gets compared against.
+  rev=$(curl -fsSL "https://releases.nixos.org/$best/git-revision")
+  echo "$rev $(date -u -d "$(gh_api "repos/NixOS/nixpkgs/commits/$rev" | jq -r .commit.committer.date)" +%s)"
 }
 
 # Newest commit on a branch before the cutoff, as "rev epoch". With a cache
@@ -95,7 +98,7 @@ for input in $(jq -r '.nodes.root.inputs | keys[]' flake.lock); do
     continue
   fi
   read -r rev t <<<"$new"
-  ((t > old_t)) || continue
+  if [[ $rev == "$old" ]] || ((t <= old_t)); then continue; fi
 
   overrides+=(--override-input "$input" "github:$owner/$repo/$rev")
   rows+=("| $input | $(date -u -d "@$old_t" +%F) | $(date -u -d "@$t" +%F) | [${old:0:7}…${rev:0:7}](https://github.com/$owner/$repo/compare/$old...$rev) |")
