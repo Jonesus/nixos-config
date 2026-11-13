@@ -40,10 +40,3 @@ window-rule {
     open-floating true
     open-focused true
 }
-
-workspace "dev" {
-    open-on-output "Dell Inc. Dell U4919DW 515XTY2"
-}
-workspace "dev2" {
-    open-on-output "Dell Inc. Dell U4919DW 515XTY2"
-}
