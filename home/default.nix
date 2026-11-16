@@ -28,6 +28,7 @@
     uv
     gnumake
     loupe
+    thunderbird
   ];
 
   home.pointerCursor = {
@@ -73,6 +74,7 @@
       "x-scheme-handler/http" = "firefox.desktop";
       "x-scheme-handler/https" = "firefox.desktop";
       "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+      "x-scheme-handler/mailto" = "thunderbird.desktop";
       "inode/directory" = "org.gnome.Nautilus.desktop";
     }
     # Loupe for every image type it handles (its .desktop MimeType list).
