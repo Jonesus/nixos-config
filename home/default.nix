@@ -9,6 +9,7 @@
     ./vscode.nix
     ./vim.nix
     ./claude.nix
+    ./thunderbird.nix
   ];
 
   home.username = user;
@@ -28,7 +29,6 @@
     uv
     gnumake
     loupe
-    thunderbird
   ];
 
   home.pointerCursor = {
@@ -43,8 +43,22 @@
   # fall back to Cantarell, which isn't installed.
   dconf.settings = {
     "org/gnome/desktop/interface".font-name = "Inter 11";
-    "org/gnome/nautilus/preferences".default-folder-viewer = "list-view";
     "org/gnome/nautilus/list-view".default-zoom-level = "small";
+    # Newest first: in Nautilus (which is also the portal file picker) and in
+    # the GTK3/GTK4 built-in file choosers.
+    "org/gnome/nautilus/preferences" = {
+      default-folder-viewer = "list-view";
+      default-sort-order = "mtime";
+      default-sort-in-reverse-order = true;
+    };
+    "org/gtk/settings/file-chooser" = {
+      sort-column = "modified";
+      sort-order = "descending";
+    };
+    "org/gtk/gtk4/settings/file-chooser" = {
+      sort-column = "modified";
+      sort-order = "descending";
+    };
   };
 
   # Automount USB drives (via udisks2) and open them in Nautilus.
