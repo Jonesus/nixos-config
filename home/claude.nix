@@ -17,6 +17,12 @@ in
     mutableSettings = true;
     settings = {
       permissions.defaultMode = "auto";
+      # Home Assistant: REST via the ~/.local/bin/ha-api helper (token in
+      # ~/.config/ha/token), and kubectl scoped to the HA namespace.
+      permissions.allow = [
+        "Bash(ha-api *)"
+        "Bash(kubectl -n homeassistant *)"
+      ];
       tui = "fullscreen";
       skipAutoPermissionPrompt = true;
       agentPushNotifEnabled = true;
