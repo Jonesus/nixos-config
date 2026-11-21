@@ -11,4 +11,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     powerManagement.enable = true;
   };
+
+  # GPU passthrough for containers (`docker run --device nvidia.com/gpu=all`).
+  hardware.nvidia-container-toolkit.enable = true;
 }
