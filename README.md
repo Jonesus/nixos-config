@@ -1,6 +1,6 @@
 # nixos-config
 
-NixOS (unstable) flake for a ThinkPad X13 Gen 2a: **niri** + **noctalia** shell + **noctalia-greeter**,
+NixOS (unstable) flake for a ThinkPad X13 Gen 2a, a ThinkPad X260 and a desktop: **niri** + **noctalia** shell + **noctalia-greeter**,
 home-manager as a NixOS module, ghostty, LUKS2 + btrfs via disko.
 
 ```
@@ -24,7 +24,7 @@ scripts/install.sh           wipe + install from the live ISO
    ```sh
    nix-shell -p git
    git clone https://github.com/<you>/nixos-config && cd nixos-config
-   sudo ./scripts/install.sh
+   sudo ./scripts/install.sh <host>   # x13, x260 or desktop
    ```
    It asks for the disk encryption password, partitions with disko, generates
    `hardware-configuration.nix`, installs, and asks for your user password.

@@ -1,0 +1,8 @@
+// x260 (ThinkPad X260) — outputs and workspaces
+// Run `niri msg outputs` to see names/modes of screens.
+
+// 12.5" panel, 1366x768 or 1920x1080 depending on the model; scale 1 for
+// either (niri may pick a fractional scale on the FHD panel otherwise).
+output "eDP-1" {
+    scale 1
+}

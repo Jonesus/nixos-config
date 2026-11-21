@@ -8,11 +8,19 @@
 
   programs.git = {
     enable = true;
-    signing = {
-      # Each machine signs with its own key; the X13's isn't on the desktop.
-      key = if hostname == "desktop" then "75AA59CCA61B5264" else "040E3EDC6AF623CE";
-      signByDefault = true;
-    };
+    signing =
+      let
+        # Each machine signs with its own key. A host not listed here doesn't
+        # sign until it gets one (`gpg --quick-gen-key`, then add it here).
+        keys = {
+          x13 = "040E3EDC6AF623CE";
+          desktop = "75AA59CCA61B5264";
+        };
+      in
+      {
+        key = keys.${hostname} or null;
+        signByDefault = keys ? ${hostname};
+      };
     settings = {
       user = {
         name = "Joonas Palosuo";
