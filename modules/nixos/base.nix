@@ -90,7 +90,28 @@
   services.fwupd.enable = true; # ThinkPad firmware updates via LVFS
   services.fstrim.enable = true;
   services.btrfs.autoScrub.enable = true;
-  zramSwap.enable = true;
+  # Compressed swap in RAM first (zstd packs ~3-4x), the btrfs swapfile on
+  # LUKS only as overflow: swapping in from there is what makes the machine
+  # crawl. Up to 100% of RAM of uncompressed pages fits in about a third of
+  # that. With swap this cheap, prefer it over dropping file cache (which
+  # then has to be re-read from disk), and don't read ahead on swap-in.
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+  };
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 180;
+    "vm.page-cluster" = 0;
+  };
+
+  # Safety net so a runaway app gets killed instead of the whole desktop
+  # thrashing. Every app runs in its own scope (app-niri-firefox-*.scope,
+  # ...), so oomd kills that one app: in the user session, the one under the
+  # most memory pressure when the session spends >80% of 30 s stalled on
+  # memory; anywhere, the one using the most swap once swap is >90% full
+  # (Fedora's defaults).
+  systemd.oomd.enableUserSlices = true;
+  systemd.slices."-".sliceConfig.ManagedOOMSwap = "kill";
 
   services.pipewire = {
     enable = true;
